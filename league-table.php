@@ -84,7 +84,7 @@ try {
                             <?php
                                 foreach ($competitionDetails->getSeasons() as $key => $seasonDetails) {
                             ?>
-                                <a class="dropdown-item" href="<?= "/soccer-v3-scores/league-table.php/" . $competitionId . "/" . $seasonDetails->getRounds()[0]->getRoundId() ?>"><?= $seasonDetails->getName() ?></a>
+                                <a class="dropdown-item" href="<?= "/league-table.php/" . $competitionId . "/" . $seasonDetails->getRounds()[0]->getRoundId() ?>"><?= $seasonDetails->getName() ?></a>
                             <?php
                                 }
                             ?>
