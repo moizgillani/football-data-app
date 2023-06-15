@@ -31,6 +31,7 @@ try {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
         crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./assets/css/custom.css">
 </head>
 
 <body>
@@ -66,9 +67,9 @@ try {
                             }
                         }
                 ?>
-                <a href='<?= "league-table.php/" . $data->getCompetitionId() ?>' style="text-decoration:none; cursor:pointer">
+                <a href='<?= "league-table.php/" . $data->getCompetitionId() . "/" . $roundId ?>' style="text-decoration:none; cursor:pointer">
                     <div class="col p-3">
-                        <div class="card" style="width: 18rem;">
+                        <div class="card custom-card" style="width: 18rem;">
                             <!-- <img src="..." class="card-img-top" alt="..."> -->
                             <div class="card-body">
                                 <h5 class="card-title"><?= $data->getName() ?></h5>
@@ -87,7 +88,7 @@ try {
 </body>
 
 <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-    <p class="col mb-0 text-muted">This app uses api's provided by <a href="https://sportsdata.io/">sportsdata.io</a>. The makers of this app has no association with <a href="https://sportsdata.io/">sportsdata.io</a>.</p>
+    <p class="col mb-0 text-muted">This app uses api's provided by <a href="https://sportsdata.io/">sportsdata.io</a>. The makers of this app have no association with <a href="https://sportsdata.io/">sportsdata.io</a>.</p>
 </footer>
 
 </html>

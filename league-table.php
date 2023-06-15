@@ -9,9 +9,12 @@ use SoccerV3ScoresLib\Models\FormatEnum;
 $format = FormatEnum::JSON;
 
 $uriSegments = explode("/", urldecode(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)));
-// $teamsCount = $uriSegments[sizeof($uriSegments) - 1];
-// $roundId = $uriSegments[sizeof($uriSegments) - 2];
-$competitionId = $uriSegments[sizeof($uriSegments) - 1];
+
+$competitionId = $uriSegments[sizeof($uriSegments) - 2];
+$roundId = $uriSegments[sizeof($uriSegments) - 1];
+
+// var_dump($roundId);
+// exit;
 
 $client = SoccerV3ScoresClientBuilder::init()
     ->ocpApimSubscriptionKey('384f9c27128942d5b233a168492db568')
@@ -24,7 +27,9 @@ try {
         $competitionId
     );
     $teamsCount = sizeof($competitionDetails->getTeams());
-    $roundId = $competitionDetails->getCurrentSeason()->getRounds()[0]->getRoundId();
+    if ($roundId == 0 || $roundId == NULL) {
+        $roundId = $competitionDetails->getCurrentSeason()->getRounds()[0]->getRoundId();
+    }
     
     $result = $client->getAPIController()->standings(
         $format,
@@ -69,6 +74,24 @@ try {
             </div>
         </header>
         <main>
+            <div class="d-flex d-row justify-content-end mb-3">
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        Season
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <li>
+                            <?php
+                                foreach ($competitionDetails->getSeasons() as $key => $seasonDetails) {
+                            ?>
+                                <a class="dropdown-item" href="<?= "/soccer-v3-scores/league-table.php/" . $competitionId . "/" . $seasonDetails->getRounds()[0]->getRoundId() ?>"><?= $seasonDetails->getName() ?></a>
+                            <?php
+                                }
+                            ?>
+                        </li>
+                    </ul>
+                </div>
+            </div>
             <table class="table">
                 <thead>
                     <tr>
@@ -115,7 +138,7 @@ try {
 </body>
 
 <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-    <p class="col mb-0 text-muted">This app uses api's provided by <a href="https://sportsdata.io/">sportsdata.io</a>. The makers of this app has no association with <a href="https://sportsdata.io/">sportsdata.io</a>.</p>
+    <p class="col mb-0 text-muted">This app uses api's provided by <a href="https://sportsdata.io/">sportsdata.io</a>. The makers of this app have no association with <a href="https://sportsdata.io/">sportsdata.io</a>.</p>
 </footer>
 
 </html>
